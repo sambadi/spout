@@ -314,13 +314,15 @@ EOD;
 
             $content .= sprintf(' applyBorder="%d"', $style->shouldApplyBorder() ? 1 : 0);
 
+            $content .= ' applyAlignment="1">';
+            $content .= '<alignment horizontal="center" vertical="center"';
+            
             if ($style->shouldWrapText()) {
-                $content .= ' applyAlignment="1">';
-                $content .= '<alignment wrapText="1"/>';
-                $content .= '</xf>';
-            } else {
-                $content .= '/>';
+                $content .= ' wrapText="1"';
             }
+            $content .= '/>';
+            
+            $content .= '</xf>';
         }
 
         $content .= '</cellXfs>';
