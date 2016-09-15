@@ -87,7 +87,7 @@ EOD;
                     '<col min="' . $c['min'] .
                     '" max="' . $c['max'] .
                     '" width="' . $c['width'] .
-                    '" customWidth="1"/>'
+                    '" bestFit="1" customWidth="1"/>'
                 );
             }
             fwrite($this->sheetFilePointer, '</cols>');
