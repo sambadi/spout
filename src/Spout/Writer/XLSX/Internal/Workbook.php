@@ -36,7 +36,7 @@ class Workbook extends AbstractWorkbook
     protected $styleHelper;
 
     /** @var array contain column width information */
-    protected $columnwidths = array();
+    protected $columnWidths = array();
 
     /**
      * @param string $tempFolder
@@ -45,7 +45,7 @@ class Workbook extends AbstractWorkbook
      * @param \Box\Spout\Writer\Style\Style $defaultRowStyle
      * @throws \Box\Spout\Common\Exception\IOException If unable to create at least one of the base folders
      */
-    public function __construct($tempFolder, $shouldUseInlineStrings, $shouldCreateNewSheetsAutomatically, $defaultRowStyle, $columnwidths)
+    public function __construct($tempFolder, $shouldUseInlineStrings, $shouldCreateNewSheetsAutomatically, $defaultRowStyle, $columnWidths)
     {
         parent::__construct($shouldCreateNewSheetsAutomatically, $defaultRowStyle);
 
@@ -60,7 +60,7 @@ class Workbook extends AbstractWorkbook
         $xlFolder = $this->fileSystemHelper->getXlFolder();
         $this->sharedStringsHelper = new SharedStringsHelper($xlFolder);
 
-        $this->columnwidths = $columnwidths;
+        $this->columnWidths = $columnWidths;
     }
 
     /**
@@ -91,7 +91,7 @@ class Workbook extends AbstractWorkbook
         $sheet = new Sheet($newSheetIndex);
 
         $worksheetFilesFolder = $this->fileSystemHelper->getXlWorksheetsFolder();
-        $worksheet = new Worksheet($sheet, $worksheetFilesFolder, $this->sharedStringsHelper, $this->styleHelper, $this->shouldUseInlineStrings, $this->columnwidths);
+        $worksheet = new Worksheet($sheet, $worksheetFilesFolder, $this->sharedStringsHelper, $this->styleHelper, $this->shouldUseInlineStrings, $this->columnWidths);
         $this->worksheets[] = $worksheet;
 
         return $worksheet;
@@ -101,10 +101,10 @@ class Workbook extends AbstractWorkbook
      * Set column width for sheet that will be created
      * should only be called from the writer
      * 
-     * @param array $columnwidths
+     * @param array $columnWidths
      */
-    public function _setColumnWidth( $columnwidths ) {
-        $this->columnwidths = $columnwidths;
+    public function _setColumnWidth( $columnWidths ) {
+        $this->columnWidths = $columnWidths;
     }
 
     /**

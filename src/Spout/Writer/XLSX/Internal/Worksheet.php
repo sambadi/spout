@@ -53,7 +53,7 @@ EOD;
      * @param bool $shouldUseInlineStrings Whether inline or shared strings should be used
      * @throws \Box\Spout\Common\Exception\IOException If the sheet data file cannot be opened for writing
      */
-    public function __construct($externalSheet, $worksheetFilesFolder, $sharedStringsHelper, $styleHelper, $shouldUseInlineStrings, $columnwidths)
+    public function __construct($externalSheet, $worksheetFilesFolder, $sharedStringsHelper, $styleHelper, $shouldUseInlineStrings, $columnWidths)
     {
         $this->externalSheet = $externalSheet;
         $this->sharedStringsHelper = $sharedStringsHelper;
@@ -64,7 +64,7 @@ EOD;
         $this->stringsEscaper = \Box\Spout\Common\Escaper\XLSX::getInstance();
 
         $this->worksheetFilePath = $worksheetFilesFolder . '/' . strtolower($this->externalSheet->getName()) . '.xml';
-        $this->startSheet($columnwidths);
+        $this->startSheet($columnWidths);
     }
 
     /**
@@ -73,22 +73,24 @@ EOD;
      * @return void
      * @throws \Box\Spout\Common\Exception\IOException If the sheet data file cannot be opened for writing
      */
-    protected function startSheet($columnwidths = null)
+    protected function startSheet($columnWidths = null)
     {
         $this->sheetFilePointer = fopen($this->worksheetFilePath, 'w');
         $this->throwIfSheetFilePointerIsNotAvailable();
 
         fwrite($this->sheetFilePointer, self::SHEET_XML_FILE_HEADER);
         
-        if(!empty($columnwidths)) {
-            foreach($columnwidths as $c) {
+        if(!empty($columnWidths)) {
+            fwrite($this->sheetFilePointer, '<cols>');
+            foreach($columnWidths as $c) {
                 fwrite($this->sheetFilePointer, 
-                    '<cols><col min="' . $c['min'] .
+                    '<col min="' . $c['min'] .
                     '" max="' . $c['max'] .
                     '" width="' . $c['width'] .
-                    '" customWidth="1"/></cols>'
+                    '" customWidth="1"/>'
                 );
             }
+            fwrite($this->sheetFilePointer, '</cols>');
         }
 
         fwrite($this->sheetFilePointer, '<sheetData>');
